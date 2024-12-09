@@ -3,7 +3,7 @@ from resources import resources
 from menu import MENU as menu
 
 # Profit
-money = 0
+profit = 0
 
 # Resources
 water = resources["water"]
@@ -16,11 +16,15 @@ latte = menu["latte"]
 cappuccino = menu["cappuccino"]
 
 
-user_choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
+user_choice = input(
+    "What would you like? (espresso/latte/cappuccino): ").lower()
 
-ask_money = input("Do you have coins or paper notes? (coins/paper/both): )").lower()
+ask_money = input(
+    "Do you have coins or paper notes? (coins/paper/both): )").lower()
+
 
 def check_money():
+    """This function checks the payment methods."""
     money_in_function = 0
     if ask_money == "coins":
         coins = int(input("How many coins would you like?: "))
@@ -35,7 +39,10 @@ def check_money():
         money_in_function += coins_first
     return money_in_function
 
-money += check_money()
+
+money = check_money()
+profit += money
+refund_money = 0
 
 if user_choice == "off":
     sys.exit()
@@ -45,14 +52,17 @@ if user_choice == "report":
     print(f"Coffee: {coffee}")
     print(f"Money: {money}")
 if user_choice == "latte":
-    if  water >= 200 and coffee >= 24 and milk >= 150:
+    if water >= 200 and coffee >= 24 and milk >= 150:
         print("Making Latte")
         water -= 200
         coffee -= 24
         milk -= 150
-        money += latte["cost"]
+        # It refunds the money back to the user.
+        refund_money = profit - latte["cost"]
     elif water < 200 or coffee < 24 or milk < 150:
         print("Sorry, there is not enough water or coffee or milk.")
+        # It gives back the money to the user if resources are not sufficient.
+        profit -= money
 if user_choice == "espresso":
     if water >= 50 and coffee >= 18:
         print("Making Espresso")
