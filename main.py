@@ -1,6 +1,12 @@
+import os
 import sys
+from logo import logo
 from resources import resources
 from menu import MENU as menu
+
+
+os.system("cls")
+print(logo)
 
 # Profit
 profit = 0
