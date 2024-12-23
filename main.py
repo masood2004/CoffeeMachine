@@ -1,5 +1,6 @@
 import os
 import sys
+import animation as ani
 from logo import logo
 from resources import resources
 from menu import MENU as menu
@@ -57,18 +58,30 @@ if user_choice == "report":
     print(f"Milk: {milk}")
     print(f"Coffee: {coffee}")
     print(f"Money: {money}")
+
+# Latte as a User Choice
+
 if user_choice == "latte":
-    if water >= 200 and coffee >= 24 and milk >= 150:
-        print("Making Latte")
-        water -= 200
-        coffee -= 24
-        milk -= 150
-        # It refunds the money back to the user.
-        refund_money = profit - latte["cost"]
-    elif water < 200 or coffee < 24 or milk < 150:
-        print("Sorry, there is not enough water or coffee or milk.")
-        # It gives back the money to the user if resources are not sufficient.
-        profit -= money
+    if money >= latte["cost"]:  # Implementing cost checking
+        if water >= 200 and coffee >= 24 and milk >= 150:
+            ani.bouncing_ball_animation(duration=5)
+            water -= 200
+            coffee -= 24
+            milk -= 150
+            print(f"Here is your latte. Enjoy!")
+            # It refunds the money back to the user.
+            refund_money = profit - latte["cost"]
+            if refund_money > 0:
+                print(f"Here is your change: Rs.{refund_money}")
+        elif water < 200 or coffee < 24 or milk < 150:
+            print("Sorry, there is not enough water or coffee or milk.")
+            # It gives back the money to the user if resources are not sufficient.
+            profit -= money
+    else:
+        print("Sorry, there is not enough money to buy a Latte.")
+
+# Espresso as a User Choice
+
 if user_choice == "espresso":
     if water >= 50 and coffee >= 18:
         print("Making Espresso")
@@ -77,6 +90,11 @@ if user_choice == "espresso":
         money += espresso["cost"]
     elif water < 50 or coffee < 18:
         print("Sorry, there is not enough water or coffee.")
+
+
+# Cappuccino as a User Choice
+
+
 if user_choice == "cappuccino":
     if water >= 250 and coffee >= 24 and milk >= 100:
         print("Making Cappuccino")
@@ -86,5 +104,3 @@ if user_choice == "cappuccino":
         money += cappuccino["cost"]
     elif water < 250 or coffee < 24 or milk < 100:
         print("Sorry, there is not enough water or coffee or milk.")
-# while True:
-#     user_choice = input("What would you like? (espresso/latte/cappuccino): ")
